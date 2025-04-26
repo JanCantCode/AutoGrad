@@ -14,6 +14,7 @@ public class Product implements Function {
     }
     @Override
     public double apply(Set<Variable> variables) {
+        System.out.println("we are " + a.toString() + " " + b.toString());
         return this.a.apply(variables) * this.b.apply(variables);
     }
 
@@ -43,5 +44,24 @@ public class Product implements Function {
         }
 
         return this;
+    }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        Function aNew = a;
+        Function bNew = b;
+        if (a instanceof Variable var) {
+            if (var.equals(variable)) aNew = constant;
+        } else { // if a is not a Variable, pass down the substitution
+            aNew = a.substituteVariableForConstant(variable, constant);
+        }
+
+        if (b instanceof Variable var) {
+            if (var.equals(variable)) bNew = constant;
+        } else { // if b ins not a Variable, pass down the substitution
+            bNew = b.substituteVariableForConstant(variable, constant);
+        }
+        System.out.println("product substitution: old: " + a.toString() + " " + b.toString() + " new: " + aNew.toString() + " " + bNew.toString());
+        return new Product(aNew, bNew);
     }
 }

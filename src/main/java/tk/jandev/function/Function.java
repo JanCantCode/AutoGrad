@@ -5,7 +5,7 @@ import tk.jandev.function.impl.Variable;
 
 import java.util.Set;
 // TODO generalize function children, see getChildren. When this is done, generalize all methods regarding modifications of children
-// TODO finish implementing substituteVariableForConstant on all Function implementations
+// TODO replace all methods that return Functions with recursive generics.
 public interface Function {
     /**
      *

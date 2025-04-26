@@ -32,4 +32,12 @@ public class Inverse implements Function {
         }
         return this;
     }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        if (this.function instanceof Variable var) {
+            if (var.equals(variable)) return new Inverse(constant);
+        }
+        return new Inverse(this.function.substituteVariableForConstant(variable, constant));
+    }
 }

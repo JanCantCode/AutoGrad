@@ -1,6 +1,7 @@
 package tk.jandev;
 
 import tk.jandev.data.DataSet;
+import tk.jandev.fitting.fittable.impl.InputScaler;
 import tk.jandev.fitting.fittable.impl.LinearFunction;
 import tk.jandev.fitting.optimizer.IteratingOptimizer;
 import tk.jandev.fitting.optimizer.gradDescent.GradientDescentConfig;
@@ -19,10 +20,10 @@ public class Main {
 
         // dataset of points from this function
         DataSet fakeData = Helper.createDataSet(myLinearFunction, -5, 5, 20, 0, vars);
-        System.out.println("Created Fake Dataset of Size: " + fakeData.size() + ": " + fakeData);
+        System.out.println("Created Fake Dataset of Size: " + fakeData.size());
 
         // function that is meant to approximate our base function
-        LinearFunction approximator = new LinearFunction();
+        InputScaler approximator = new InputScaler();
         GradientDescentConfig config = new GradientDescentConfig(0.01);
         GradientDescentOptimizer optimizer = new GradientDescentOptimizer(approximator, config, fakeData);
 

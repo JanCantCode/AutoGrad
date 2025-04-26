@@ -28,4 +28,14 @@ public class Constant implements Function {
     public Function findOptimizedNode() { // Constants cannot be optimized and don't have children
         return this;
     }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        return new Constant(this.get()); // constants arent variables and don't have children
+    }
+
+    @Override
+    public String toString() {
+        return "{ " + this.get() + " }";
+    }
 }

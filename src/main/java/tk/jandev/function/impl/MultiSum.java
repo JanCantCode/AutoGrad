@@ -55,4 +55,20 @@ public class MultiSum implements Function {
 
         return new MultiSum(result);
     }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        Function[] newFunctions = new Function[this.summands.length];
+
+        for (int i = 0; i < this.summands.length; i++) {
+            Function summand = this.summands[i];
+            if (summand instanceof Variable var) {
+                if (var.equals(variable)) newFunctions[i] = constant;
+            } else {
+                newFunctions[i] = summand.substituteVariableForConstant(variable, constant);
+            }
+        }
+
+        return new MultiSum(newFunctions);
+    }
 }

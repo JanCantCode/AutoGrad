@@ -39,4 +39,12 @@ public class Exponent implements Function {
 
         return this;
     }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        if (this.base instanceof Variable var) {
+            if (var.equals(variable)) return new Exponent(constant, this.exponent);
+        }
+        return new Exponent(this.base.substituteVariableForConstant(variable, constant), exponent);
+    }
 }

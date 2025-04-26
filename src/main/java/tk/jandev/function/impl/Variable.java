@@ -36,7 +36,7 @@ public class Variable implements Function {
     @Override
     public double apply(Set<Variable> variables) {
         for (Variable var : variables) {
-            System.out.println("trying: " + var + " self: " + this);
+            System.out.println("this: " + this.name + " trying: " + var.name);
             if (var.equals(this)) return var.get();
         }
         throw new ArithmeticException("Did not find input variable matching ourself!");
