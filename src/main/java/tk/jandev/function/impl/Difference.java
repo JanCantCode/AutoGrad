@@ -11,4 +11,14 @@ public class Difference extends Sum {
                 b
         ));
     }
+
+    @Override
+    public String toString() {
+        return "( " + a.toString() + " - " + b.toString() + " )";
+    }
+
+    @Override
+    public Function substituteVariableForConstant(Variable variable, Constant constant) {
+        return super.substituteVariableForConstant(variable, constant);
+    }
 }

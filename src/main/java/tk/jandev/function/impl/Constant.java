@@ -1,8 +1,7 @@
 package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
-
-import java.util.Set;
+import tk.jandev.function.VariableContext;
 
 public class Constant implements Function {
     private final double value;
@@ -15,7 +14,7 @@ public class Constant implements Function {
     }
 
     @Override
-    public double apply(Set<Variable> variables) {
+    public double apply(VariableContext variables) {
         return this.value;
     }
 
@@ -36,6 +35,6 @@ public class Constant implements Function {
 
     @Override
     public String toString() {
-        return "{ " + this.get() + " }";
+        return String.valueOf(this.get());
     }
 }

@@ -1,8 +1,7 @@
 package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
-
-import java.util.Set;
+import tk.jandev.function.VariableContext;
 
 public class Exponent implements Function {
     private Function base;
@@ -13,7 +12,7 @@ public class Exponent implements Function {
     }
 
     @Override
-    public double apply(Set<Variable> variables) {
+    public double apply(VariableContext variables) {
         return Math.pow(base.apply(variables), this.exponent);
     }
 
@@ -46,5 +45,10 @@ public class Exponent implements Function {
             if (var.equals(variable)) return new Exponent(constant, this.exponent);
         }
         return new Exponent(this.base.substituteVariableForConstant(variable, constant), exponent);
+    }
+
+    @Override
+    public String toString() {
+        return "( " + this.base + " ) ^ " + this.exponent;
     }
 }

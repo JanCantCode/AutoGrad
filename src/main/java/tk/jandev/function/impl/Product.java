@@ -1,8 +1,7 @@
 package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
-
-import java.util.Set;
+import tk.jandev.function.VariableContext;
 
 public class Product implements Function {
     private Function a;
@@ -13,8 +12,7 @@ public class Product implements Function {
         this.b = b;
     }
     @Override
-    public double apply(Set<Variable> variables) {
-        System.out.println("we are " + a.toString() + " " + b.toString());
+    public double apply(VariableContext variables) {
         return this.a.apply(variables) * this.b.apply(variables);
     }
 
@@ -61,7 +59,11 @@ public class Product implements Function {
         } else { // if b ins not a Variable, pass down the substitution
             bNew = b.substituteVariableForConstant(variable, constant);
         }
-        System.out.println("product substitution: old: " + a.toString() + " " + b.toString() + " new: " + aNew.toString() + " " + bNew.toString());
         return new Product(aNew, bNew);
+    }
+
+    @Override
+    public String toString() {
+        return "( " + this.a.toString() + " * " + this.b.toString() + " )";
     }
 }

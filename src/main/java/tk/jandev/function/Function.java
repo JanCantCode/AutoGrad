@@ -3,7 +3,6 @@ package tk.jandev.function;
 import tk.jandev.function.impl.Constant;
 import tk.jandev.function.impl.Variable;
 
-import java.util.Set;
 // TODO generalize function children, see getChildren. When this is done, generalize all methods regarding modifications of children
 // TODO replace all methods that return Functions with recursive generics.
 public interface Function {
@@ -12,7 +11,7 @@ public interface Function {
      * @param variables the values of all variables of this function. If not all variables are present, an Exception will be thrown.
      * @return the value of the function at the point specified by variables
      */
-    double apply(Set<Variable> variables);
+    double apply(VariableContext variables);
 
     /**
      *

@@ -1,8 +1,7 @@
 package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
-
-import java.util.Set;
+import tk.jandev.function.VariableContext;
 
 public class Inverse implements Function {
     private Function function;
@@ -10,7 +9,7 @@ public class Inverse implements Function {
         this.function = function;
     }
     @Override
-    public double apply(Set<Variable> variables) {
+    public double apply(VariableContext variables) {
         return 1 / function.apply(variables);
     }
 
@@ -39,5 +38,10 @@ public class Inverse implements Function {
             if (var.equals(variable)) return new Inverse(constant);
         }
         return new Inverse(this.function.substituteVariableForConstant(variable, constant));
+    }
+
+    @Override
+    public String toString() {
+        return "( " + "1 / " + this.function.toString() + " )";
     }
 }

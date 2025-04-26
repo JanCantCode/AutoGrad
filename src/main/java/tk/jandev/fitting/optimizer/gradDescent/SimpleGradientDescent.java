@@ -9,12 +9,14 @@ import tk.jandev.function.impl.Variable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GradientDescentOptimizer extends IteratingOptimizer<GradientDescentConfig> {
-    private final Map<Variable, Function> variableToDerivativeInRespectToFittableParam = new HashMap<>();
-    private final Function errorFunctionInRespectToDataSet;
+public class SimpleGradientDescent extends IteratingOptimizer<GradientDescentConfig> {
+    private final Map<Variable, Function> variableToDerivativeInRespectToFittableParam = new HashMap<>(); // maps variables to the partial derivatives of the error function in respect to that variable
+    private final Function errorFunctionInRespectToDataSet; // represents the error of the function in respect to the fittable parameters
 
-    public GradientDescentOptimizer(Fittable2D function, GradientDescentConfig configData, DataSet dataSet) {
+    public SimpleGradientDescent(Fittable2D function, GradientDescentConfig configData, DataSet dataSet) {
         super(function, configData, dataSet);
+
+        this.currentParameters = configData.initialParamSupplier().apply(function.getFittableParams());
 
         this.errorFunctionInRespectToDataSet = function.getSquaredErrorFunction(dataSet);
 
@@ -28,10 +30,10 @@ public class GradientDescentOptimizer extends IteratingOptimizer<GradientDescent
     @Override
     public void iteration() {
         for (Map.Entry<Variable, Function> entry : variableToDerivativeInRespectToFittableParam.entrySet()) {
-            double slope = entry.getValue().apply(this.function.getFittableParams()); // find the current slope of the error function in respect to the current parameter
+            double slope = entry.getValue().apply(currentParameters); // find the current slope of the error function in respect to the current parameter
             double delta = slope * this.configData.learningRate();
 
-            entry.getKey().subtract(delta); // move in the opposite direction of the (scaled) slope of the error function in order to move "downwards" on the error gradient.
+            this.currentParameters.subtract(entry.getKey(), delta); // move in the opposite direction of the (scaled) slope of the error function in order to move "downwards" on the error gradient.
         }
     }
 }

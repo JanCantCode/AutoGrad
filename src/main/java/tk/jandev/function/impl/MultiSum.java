@@ -2,9 +2,9 @@ package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
 import tk.jandev.Helper;
+import tk.jandev.function.VariableContext;
 
 import java.util.Arrays;
-import java.util.Set;
 
 public class MultiSum implements Function {
     private final Function[] summands;
@@ -14,7 +14,7 @@ public class MultiSum implements Function {
     }
 
     @Override
-    public double apply(Set<Variable> variables) {
+    public double apply(VariableContext variables) {
         return Arrays.stream(summands).mapToDouble(function -> function.apply(variables)).sum();
     }
 
@@ -70,5 +70,17 @@ public class MultiSum implements Function {
         }
 
         return new MultiSum(newFunctions);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("( ");
+        for (Function function : this.summands) {
+            builder.append(function.toString()).append( " + ");
+        }
+        builder.append(" )");
+
+        return builder.toString();
     }
 }

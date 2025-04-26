@@ -1,12 +1,11 @@
 package tk.jandev.function.impl;
 
 import tk.jandev.function.Function;
-
-import java.util.Set;
+import tk.jandev.function.VariableContext;
 
 public class Sum implements Function {
-    private Function a;
-    private Function b;
+    Function a;
+    Function b;
 
     public Sum(Function a, Function b) {
         this.a = a;
@@ -14,7 +13,7 @@ public class Sum implements Function {
     }
 
     @Override
-    public double apply(Set<Variable> variables) {
+    public double apply(VariableContext variables) {
         return a.apply(variables) + b.apply(variables);
     }
 
@@ -40,15 +39,20 @@ public class Sum implements Function {
         if (a instanceof Variable var) {
             if (var.equals(variable)) aNew = constant;
         } else { // if a is not a Variable, pass down the substitution
-            a = a.substituteVariableForConstant(variable, constant);
+            aNew = a.substituteVariableForConstant(variable, constant);
         }
 
         if (b instanceof Variable var) {
             if (var.equals(variable)) bNew = constant;
         } else {
-            b = b.substituteVariableForConstant(variable, constant);
+            bNew = b.substituteVariableForConstant(variable, constant);
         }
 
         return new Sum(aNew, bNew);
+    }
+
+    @Override
+    public String toString() {
+        return  "( " + a.toString() + " + " + b.toString() + " )";
     }
 }
